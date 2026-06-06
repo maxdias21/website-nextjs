@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 40px;
+    justify-self: center;
+    align-self: center;
+}
+
+.textHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+@media (min-width: 48rem) {
+    .container {
+        width: 80%;
+        display: flex;
+    }
+}
+
+
+

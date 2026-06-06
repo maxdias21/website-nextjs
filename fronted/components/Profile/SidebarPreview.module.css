@@ -1,0 +1,43 @@
+.feedFriends {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.friends {
+    display: flex;
+
+    h2 {
+        padding-top: 10px;
+        text-wrap: nowrap;
+    }
+
+    a {
+        margin-left: auto;
+        text-align: end;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1rem;
+        padding: 10px;
+
+        &:hover {
+            background-color: #f4f2f2;
+        }
+    }
+}
+
+
+
+
+
+
+@media (max-width: 250px) {
+    .friends {
+        flex-direction: column;
+
+        a {
+            margin-left: 0;
+            padding-left: 0;
+        }
+    }
+}

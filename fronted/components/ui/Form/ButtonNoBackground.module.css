@@ -1,0 +1,21 @@
+.input {
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    height: 30px;
+    outline: none;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease-in-out;
+
+    &:hover {
+        background-color: #e4e1e1;
+    }
+}
+

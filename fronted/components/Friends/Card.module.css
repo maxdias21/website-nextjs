@@ -1,0 +1,63 @@
+.cardContent {
+    height: 350px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-radius: 10px;
+
+    a {
+        width: 100%;
+        height: 50%;
+        display: block;
+    }
+
+    a img {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px 10px 0 0;
+    }
+
+    footer {
+        display: flex;
+        flex-direction: column;
+        height: 50%;
+        padding: 5px 15px 10px 15px;
+        gap: 7px;
+
+        a {
+            margin-bottom: auto;
+            font-weight: bold;
+            display: flex;
+            color: black;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .addFriend,
+        .removeFriend {
+            padding: 5px;
+            border-radius: 7px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+
+        .addFriend {
+            background-color: #dfe9f2;
+            color: #486ec6;
+        }
+
+        .removeFriend {
+            background-color: #d6d9dd;
+            color: black;
+        }
+    }
+}

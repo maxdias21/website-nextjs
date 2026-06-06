@@ -1,0 +1,23 @@
+.field {
+    height: 50px;
+    border-radius: 10px;
+    padding: 10px;
+    outline: 1px solid #aeadad;
+    border: none;
+    font-size: 1.1rem;
+    width: 100%;
+}
+
+.eventInvalid {
+    animation: shake 0.1s 3;
+    outline: 2px solid red;
+}
+
+@keyframes shake {
+    from {
+        transform: translateY(-10px);
+    }
+    to {
+        transform: translateY(0px);
+    }
+}

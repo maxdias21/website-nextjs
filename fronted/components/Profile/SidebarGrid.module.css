@@ -1,0 +1,13 @@
+.gridFriends {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto auto;
+    gap: 10px;
+}
+
+
+@media (max-width: 250px) {
+    .gridFriends {
+        grid-template-columns: 1fr;
+    }
+}

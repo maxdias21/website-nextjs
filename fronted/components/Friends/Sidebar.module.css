@@ -1,0 +1,21 @@
+.navItem {
+    display: flex;
+    align-items: center;
+    padding: 15px 10px;
+    border-radius: 5px;
+    gap: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+
+    &:hover {
+        background-color: #bfbfbf;
+    }
+
+    .arrow {
+        display: block;
+        margin-left: auto;
+
+    }
+}

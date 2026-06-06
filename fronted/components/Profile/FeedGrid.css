@@ -1,0 +1,27 @@
+.feedGrid {
+    display: grid;
+    grid-template-areas: "profileLeft" "profileRight";
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.feedRight {
+    grid-area: profileRight;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.feedLeft {
+    grid-area: profileLeft;
+}
+
+@media (min-width: 48rem) {
+    .feedGrid {
+        display: grid;
+        grid-template-areas: "profileLeft profileRight";
+        grid-template-columns: 0.8fr 1fr;
+        gap: 20px;
+    }
+}
+

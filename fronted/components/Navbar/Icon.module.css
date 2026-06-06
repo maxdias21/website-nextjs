@@ -1,0 +1,25 @@
+@media (min-width: 48rem) {
+    .icon__a--color--black {
+        color: black;
+    }
+
+    .navbar__main-area--icon {
+        position: absolute;
+        background: black;
+        color: white;
+        padding: 10px;
+        top: 128%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        border-radius: 5px;
+        text-align: center;
+        transition: opacity 10s;
+        font-size: 0.7rem;
+
+    }
+
+    .navbar__main-area_icons {
+        position: relative;
+    }
+}

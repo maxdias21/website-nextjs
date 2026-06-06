@@ -1,0 +1,22 @@
+.button {
+    color: white;
+    background: #4242f6;
+    cursor: pointer;
+    transition: 0.3s opacity ease-in-out;
+    height: 50px;
+    border-radius: 10px;
+    padding: 10px;
+    outline: 1px solid #aeadad;
+    border: none;
+    width: 100%;
+    font-size: 1.1rem;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.isDisabled {
+    pointer-events: none;
+    opacity: 0.6;
+}

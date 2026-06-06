@@ -1,0 +1,51 @@
+/* ---- Componentes ---- */
+.contactsHeader {
+    display: flex;
+    gap: 15px;
+}
+
+.contacts {
+    align-items: center;
+}
+
+.arrow {
+    align-self: center;
+    cursor: pointer;
+}
+
+.friendsContainer {
+    display: flex;
+    gap: 25px;
+    flex-direction: column;
+
+    .friendContainer {
+        display: flex;
+        flex-direction: column;
+        align-self: stretch;
+    }
+
+
+}
+
+/* ---- Media Queries ---- */
+@media (min-width: 48rem) {
+    .friendsContainer {
+        top: 105px;
+        position: sticky;
+        align-self: flex-start;
+        align-items: flex-start;
+    }
+
+    .arrow {
+        display: none;
+    }
+}
+
+@media (min-width: 0) and (max-width: 300px) {
+    .friendsContainer {
+        .chatContainer {
+            height: 70%;
+            width: 100%;
+        }
+    }
+}

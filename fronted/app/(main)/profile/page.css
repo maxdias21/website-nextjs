@@ -1,0 +1,38 @@
+.container {
+    gap: 0;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background-color: white;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.containerFriends {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px;
+    margin: auto;
+}
+
+@media (max-width: 300px) {
+    .containerFriends {
+        padding: 0;
+    }
+}
+
+@media (min-width: 48rem) {
+    .containerFriends {
+        width: 80%;
+    }
+}
+
+
+
+
+

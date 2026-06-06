@@ -1,0 +1,25 @@
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+    width: 100%;
+}
+.nameGroup {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+
+}
+
+.nameForm {
+    flex-direction: column;
+    display: flex;
+    gap: 30px;
+}
+
+@media (min-width: 48rem) {
+    .nameForm {
+        flex-direction: row;
+    }
+}

@@ -1,0 +1,19 @@
+.formLink {
+    height: 40px;
+    border-radius: 10px;
+    padding: 10px;
+    outline: 1px solid #aeadad;
+    border: none;
+    font-size: 1.1rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background-color: white;
+    transition: 0.5s background-color ease-in-out;
+}
+
+.formLink:hover {
+    background-color: #e3e3e3;
+}

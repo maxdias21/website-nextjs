@@ -1,0 +1,16 @@
+.postHeader {
+    display: flex;
+    gap: 12px;
+    cursor: pointer;
+
+    img {
+        border-radius: 50%;
+    }
+
+    .postTimestamp {
+        margin-top: 5px;
+        display: inline-block;
+        font-size: 0.9rem;
+        color: #65686C;
+    }
+}

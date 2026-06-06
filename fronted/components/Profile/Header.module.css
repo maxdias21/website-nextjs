@@ -1,0 +1,116 @@
+/* =====================
+   Header
+   ===================== */
+.header {
+    background: linear-gradient(to bottom, #d4a96a 0%, #e8c99a 10%, #ffffff 50%);
+    display: flex;
+    justify-content: center;
+}
+
+.inner {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+/* =====================
+   Cover Photo
+   ===================== */
+.coverPhoto {
+    position: relative;
+    z-index: 1;
+
+    img {
+        height: 300px;
+        width: 100%;
+        border-radius: 0 0 10px 10px;
+        pointer-events: none;
+    }
+
+    label {
+        position: absolute;
+        bottom: 100px;
+        right: 20px;
+        z-index: 9999;
+        padding: 10px;
+        background-color: white;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #dddddd;
+        }
+    }
+}
+
+/* =====================
+   Profile Info
+   ===================== */
+.profileInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    margin-top: -75px;
+    padding: 20px;
+    pointer-events: none;
+}
+
+.profilePhoto img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 4px solid white;
+}
+
+.profileName {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    p {
+        font-weight: bold;
+    }
+}
+
+/* =====================
+   Profile Actions
+   ===================== */
+.profileActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+
+    a {
+        text-decoration: none;
+        color: #686767;
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: bold;
+
+        &:hover {
+            background-color: #cdcccc;
+        }
+    }
+}
+
+/* =====================
+   Media Queries
+   ===================== */
+@media (min-width: 48rem) {
+    .inner {
+        flex: 0 1 80%;
+    }
+
+    .coverPhoto label {
+        bottom: 25px;
+        right: 25px;
+    }
+}

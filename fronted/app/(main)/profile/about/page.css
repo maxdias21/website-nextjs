@@ -1,0 +1,38 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    input, select, button {
+        height: 40px;
+        border: none;
+        outline: 1px solid #e1dcdc;
+        padding: 10px;
+    }
+
+    button {
+        background: #e1dcdc;
+        cursor: pointer;
+        transition: 0.3s background ease-in-out;
+
+        &:hover {
+            background: #f1f1f1;
+        }
+    }
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+.detailsHeader {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+
+    svg {
+        cursor: pointer;
+    }
+}

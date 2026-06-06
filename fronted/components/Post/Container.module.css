@@ -1,0 +1,36 @@
+/* ===== POST ===== */
+.postContainer {
+    grid-area: post;
+    display: flex;
+    gap: 15px;
+    grid-auto-columns: auto;
+
+    img {
+        flex-shrink: 1;
+    }
+
+    .button {
+        width: 100%;
+        height: auto;
+        border-radius: 25px;
+        padding: 10px;
+        border: 1px solid rgba(90, 90, 90, 0.35);
+        outline: none;
+        background-color: rgba(234, 234, 234, 0.42);
+        color: rgba(83, 82, 82, 0.94);
+        font-size: 1.2rem;
+        letter-spacing: 0.5px;
+        text-align: start;
+        cursor: pointer;
+    }
+
+    .button:hover {
+        background-color: rgba(210, 210, 210, 0.31);
+    }
+
+    @media (min-width: 0px) and (max-width: 300px) {
+        img {
+            display: none;
+        }
+    }
+}

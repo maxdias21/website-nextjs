@@ -1,0 +1,104 @@
+/* ===========================
+   Login Container
+=========================== */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    justify-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+/* ===========================
+   Image
+=========================== */
+.imageContainer {
+    display: none;
+}
+
+.logoContainer  {
+    display: flex;
+    grid-area: image;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        border-radius: 50%;
+    }
+}
+
+/* ===========================
+   Form
+=========================== */
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    grid-area: form;
+    width: 80%;
+}
+
+.formContent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.error {
+    min-height: 20px;
+    color: red;
+    font-size: 0.9rem;
+}
+
+.disabled {
+    cursor: not-allowed;
+}
+
+.loginActions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+
+@media (min-width: 48rem) {
+    .container {
+        grid-template-areas: "image form";
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr 0.7fr;
+        display: grid;
+    }
+
+    .logoContainer {
+        display: none;
+    }
+
+    .imageContainer {
+        grid-area: image;
+        position: relative;
+        width: 100%;
+        height: 70%;
+        display: flex;
+        align-self: center;
+        justify-self: center;
+
+        img {
+            border-radius: 0;
+            display: block;
+            mix-blend-mode: multiply;
+        }
+    }
+
+    .border {
+        position: fixed;
+        height: 100%;
+        border-left: 3px solid #d3d3d3;
+        top: 0;
+        left: 60%;
+    }
+}

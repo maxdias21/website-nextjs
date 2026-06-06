@@ -1,0 +1,17 @@
+.postActions {
+    display: flex;
+    gap: 30px;
+
+    .action {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+    }
+}
+
+.postActions svg{
+    color: black;
+    z-index: 9999;
+    cursor: pointer;
+    font-size: 1.3rem;
+}

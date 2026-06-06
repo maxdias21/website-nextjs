@@ -1,0 +1,36 @@
+/* ===== MAIN ===== */
+.main {
+    grid-area: center;
+    padding: 35px 20px;
+}
+
+.mainContainer {
+    display: grid;
+    grid-template-areas: "post" "stories" "cards";
+    grid-template-rows: auto auto auto;
+    gap: 40px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

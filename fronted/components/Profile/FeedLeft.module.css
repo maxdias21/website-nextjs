@@ -1,0 +1,12 @@
+.detailItem {
+    display: flex;
+    gap: 20px;
+}
+
+.detailItem, .icon {
+    font-size: 1.2rem;
+}
+
+
+
+
