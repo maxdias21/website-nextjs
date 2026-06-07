@@ -61,3 +61,13 @@
         }
     }
 }
+
+.fadeOut {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.error {
+    color: red;
+    font-size: 0.9rem;
+}

@@ -230,26 +230,30 @@ def list_requests(request):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def accept_request(request, request_id):
+def accept_request(request, user_id):
     try:
-        friend_request = FriendRequests.objects.get(id=request_id, receiver=request.user, status=FriendRequests.PENDING)
+        friend_request = FriendRequests.objects.get(
+            sender__id=user_id,
+            receiver=request.user,
+            status=FriendRequests.PENDING
+        )
     except FriendRequests.DoesNotExist:
         return Response({'error': 'Solicitação não encontrada'}, status=status.HTTP_404_NOT_FOUND)
-
     friend_request.status = FriendRequests.ACCEPTED
     friend_request.save()
-
-    return Response({'message': 'Solicitação de amizade aceita'}, status=status.HTTP_200_OK)
+    return Response({'message': 'Solicitação aceita'}, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def reject_request(request, request_id):
+def reject_request(request, user_id):
     try:
-        friend_request = FriendRequests.objects.get(id=request_id, receiver=request.user, status=FriendRequests.PENDING)
+        friend_request = FriendRequests.objects.get(
+            sender__id=user_id,
+            receiver=request.user,
+            status=FriendRequests.PENDING
+        )
     except FriendRequests.DoesNotExist:
         return Response({'error': 'Solicitação não encontrada'}, status=status.HTTP_404_NOT_FOUND)
-
     friend_request.delete()
-
-    return Response({'message': 'Solicitação de amizade aceita'}, status=status.HTTP_200_OK)
+    return Response({'message': 'Solicitação rejeitada'}, status=status.HTTP_200_OK)

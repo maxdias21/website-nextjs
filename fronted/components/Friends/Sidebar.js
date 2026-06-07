@@ -11,7 +11,7 @@ function Sidebar() {
     return (
         <>
             <h1>Friends</h1>
-            <Link href={"/public"} className={styles.navItem}>
+            <Link href={"/friends"} className={styles.navItem}>
                 <FontAwesomeIcon icon={faHouse}/>
                 <p>Menu</p>
                 <FontAwesomeIcon className={styles.arrow} icon={faAngleRight}/>
@@ -19,11 +19,6 @@ function Sidebar() {
             <Link href={"/friends/requests"} className={styles.navItem}>
                 <FontAwesomeIcon icon={faUserPlus}/>
                 <p>Solicitações de Amizade</p>
-                <FontAwesomeIcon className={styles.arrow} icon={faAngleRight}/>
-            </Link>
-            <Link href={"/friends/suggestions"} className={styles.navItem}>
-                <FontAwesomeIcon icon={faUserGroup}/>
-                <p>Sugestões</p>
                 <FontAwesomeIcon className={styles.arrow} icon={faAngleRight}/>
             </Link>
         </>

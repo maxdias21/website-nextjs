@@ -16,10 +16,12 @@ config.autoAddCss = false;
 
 function Friends() {
     const {data, isLoading, error} = useQuery({
-        queryKey: ['profiles'], queryFn: async () => {
+        queryKey: ['profiles'],
+        queryFn: async () => {
             const response = await apiFetch('django/profiles/', {method: 'GET'});
             return response.json();
         },
+        refetchOnWindowFocus: false
     });
 
     if (isLoading) return null;

@@ -25,10 +25,15 @@ export async function apiFetch(url, options) {
             }
 
             response = await fetch(url, options); // 👈 repete a requisição original
-        } catch (refreshError) {
+
+        } catch  {
             window.location.href = "/login";
             return null;
         }
+    }
+
+    if(!response.ok) {
+        throw new Error("Error occurred");
     }
 
     return response;

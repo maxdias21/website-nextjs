@@ -19,7 +19,7 @@ urlpatterns = [
 
     # SOlicitações de amizade
     path('friends/request/<int:user_id>/', send_request),
-    path('friends/accept/<int:request_id>/', accept_request),
-    path('friends/reject/<int:request_id>/', reject_request),
+    path('friends/accept/<int:user_id>/', accept_request),
+    path('friends/reject/<int:user_id>/', reject_request),
     path('friends/request/', list_requests),
 ]
