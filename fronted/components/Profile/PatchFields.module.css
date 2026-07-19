@@ -1,0 +1,26 @@
+.fieldset {
+    border: none;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.hr {
+    margin: 10px 0;
+}
+
+.input,
+.select{
+    height: 40px;
+    border: none;
+    outline: 1px solid #e1dcdc;
+    padding: 10px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+

@@ -116,35 +116,39 @@
     flex-basis: 10%;
 }
 
-.buttonDisabled,
-.buttonActive {
-    padding: 5px;
-    width: 100%;
-    border-radius: 10px;
-    border: none;
-    outline: none;
-}
-
-.buttonActive {
+.button {
     background: #377af3;
     color: #fff;
     cursor: pointer;
-}
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: none;
+    border-radius:5px;
+    height: 30px;
+    margin-bottom: 20px;
 
-.buttonDisabled {
-    background: #e5e5ec;
-    cursor: not-allowed;
+    &:hover {
+        background: #558ffb;
+    }
 }
 
 .previewImage {
-    width: 70%;
-    height: 70%;
+    width: 100%;
+    height: 100%;
     margin: auto;
     display: block;
 }
 
 .error {
     color: red;
+    font-size: 0.9rem;
+}
+
+.success {
+    color: green;
     font-size: 0.9rem;
 }
 

@@ -1,0 +1,49 @@
+.form, .fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.buttonSubmit {
+    background: #e1dcdc;
+    cursor: pointer;
+    transition: 0.3s background ease-in-out;
+    height: 40px;
+    border: none;
+    outline: 1px solid #e1dcdc;
+    padding: 10px;
+}
+
+.buttonSubmit:hover {
+    background: #f1f1f1;
+}
+
+.success {
+    font-size: 0.9rem;
+    color: green;
+}
+
+.warning {
+    font-size: 0.9rem;
+    color: #ffbf00;
+}
+
+.error {
+    font-size: 1rem;
+    color: red;
+}
+
+.p {
+    margin: 0;
+    padding: 0;
+}
+
+.detailsHeader {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.detailsHeader svg {
+    cursor: pointer;
+}

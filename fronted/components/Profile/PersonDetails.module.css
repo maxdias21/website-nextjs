@@ -1,0 +1,26 @@
+.detailItem {
+    display: flex;
+    gap: 20px;
+}
+
+.detailItem, .icon {
+    font-size: 1.2rem;
+}
+
+
+.changeLink {
+    text-decoration: none;
+    color: black;
+    transition: color, transform 0.2s ease-in-out;
+
+    &:hover {
+        color: #514e4e;
+        transform: scale(1.05);
+    }
+}
+
+
+
+
+
+

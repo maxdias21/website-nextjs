@@ -5,6 +5,7 @@ function ButtonSubmit({text="", isSubmitted = false}) {
         <button
             className={`${styles.button} ${!isSubmitted ? styles.isDisabled : ""}`}
             type="submit"
+            disabled={!isSubmitted}
         >{text}</button>
     );
 }

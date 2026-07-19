@@ -1,16 +1,23 @@
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.http import JsonResponse
+
 from rest_framework import status
-from rest_framework.decorators import permission_classes, api_view
+from rest_framework.decorators import permission_classes, api_view, action
 from rest_framework.exceptions import ValidationError
+from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+from friends.models import FriendsRequest
 from profiles.models import Profiles
-from profiles.serializers.profiles import ProfilesSerializer
+
+from friends.serializers.user_serializer import UserCreateSerializer, UserSerializer, ProfileSerializer
+from profiles.serializers.profiles_serializer import ProfilesSerializer
 
 
 # ──────────────────────────────────────────────
@@ -22,18 +29,80 @@ from profiles.serializers.profiles import ProfilesSerializer
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_users(request):
-    users = User.objects.values("id", "username", "date_joined")
+    users = User.objects.values("id", "username", "date_joined").order_by('-date_joined')[:5]
     return Response(list(users))
 
 
 # ──────────────────────────────────────────────
 # PERFIS
 # ──────────────────────────────────────────────
+# Create your views here.
+
+class ProfileFriendViewSet(ModelViewSet):
+    queryset = Profiles.objects.all()
+    permission_classes = [IsAuthenticated]
+    serializer_class = ProfilesSerializer
+    http_method_names = ['get']
+
+    def get_queryset(self, *args, **kwargs):
+        user = self.request.user
+        username = self.request.query_params.get('username')
+        friend = get_object_or_404(User, user=username)
+
+        is_friend = FriendsRequest.objects.filter(Q(from_user=user, to_user=friend) | Q(to_user=user, from_user=friend),
+                                                  status=FriendsRequest.ACCEPTED).first()
+
+        friend_id = [is_friend.from_user if is_friend.to_user_id == user.id else friend.to_user_id]
+        serializer = ProfileSerializer(user.profiles)
+
+        if is_friend is None:
+            raise ValidationError({'error': "You can't view a profile if you aren't friends."})
+
+        raise ValidationError({'success': "You can't view a profile if you aren't friends."})
+
+class CreateUser(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = UserCreateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response({'details': "User created successfully."})
+
+    def patch(self, *args, **kwargs):
+        serializer = UserSerializer(self.request.user, data=self.request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response({"details": serializer.data}, status=status.HTTP_201_CREATED)
+
 
 class ProfileApiView(ModelViewSet):
     queryset = Profiles.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = ProfilesSerializer
+    http_method_names = ['get', 'patch']
+
+    @action(detail=False, methods=["get", "patch"], url_path="me")
+    def me(self, request):
+        profile = get_object_or_404(Profiles, user=request.user.id)
+        if request.method == "GET":
+            serializer = ProfilesSerializer(profile)
+
+            return Response(serializer.data)
+
+        serializer = ProfilesSerializer(
+            profile,
+            data=request.data,
+            partial=True,
+            context={"request": request}
+        )
+
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response({"detail": serializer.data}, status=status.HTTP_201_CREATED)
 
     # Sobrescreve o save para vincular o perfil ao usuário logado
     # Não usamos Model.save() porque lá não temos acesso ao request.user
@@ -72,12 +141,13 @@ class CustomObtainPairView(TokenObtainPairView):
     Em vez de retornar os tokens no body (visível ao JS),
     salva access e refresh como cookies HttpOnly — mais seguro contra XSS.
     """
+
     def post(self, request, *args, **kwargs):
         # Chama o login original do SimpleJWT (valida usuário e senha)
         response = super().post(request, *args, **kwargs)
 
         if response.status_code == 200:
-            access_token  = response.data.get('access')
+            access_token = response.data.get('access')
             refresh_token = response.data.get('refresh')
 
             # Cookie do access token (curta duração, ex: 5 min)
@@ -85,7 +155,7 @@ class CustomObtainPairView(TokenObtainPairView):
                 key='access_token',
                 value=access_token,
                 max_age=settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'].total_seconds(),
-                httponly=True,   # JS não consegue ler esse cookie
+                httponly=True,  # JS não consegue ler esse cookie
                 samesite=settings.SESSION_COOKIE_SAMESITE,
                 secure=settings.SESSION_COOKIE_SECURE,  # só envia via HTTPS em produção
                 path='/'
@@ -112,6 +182,7 @@ class CustomTokenRefreshView(TokenRefreshView):
     gera um novo access token e salva ele no cookie.
     Isso conecta com o silent refresh do apiFetch no frontend.
     """
+
     def post(self, request, *args, **kwargs):
         # Tenta pegar o refresh token do cookie
         refresh_token = request.COOKIES.get('refresh_token')

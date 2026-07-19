@@ -21,7 +21,7 @@ function Input({
             value={value}
             onChange={onChange}
             onFocus={(enableValidation && handleFocus) || errors && handleFocus}
-            onBlur={(enableValidation && value.length < minLength ? handleBlur : undefined) || errors && handleBlur}
+            onBlur={(enableValidation && value.length < minLength ? handleBlur : undefined) || errors ? handleBlur : undefined}
             placeholder={placeholder}
             type={type}
         />

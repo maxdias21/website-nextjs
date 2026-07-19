@@ -15,7 +15,7 @@ function Home() {
             {
                 queryKey: ["posts"], // chave de cache para os posts
                 queryFn: async () => {
-                    const response = await apiFetch("/django/posts/", {method: "GET"});
+                    const response = await apiFetch("/django/all-posts/", {method: "GET"});
                     return response.json();
                 },
                 refetchOnWindowFocus: false,
@@ -31,9 +31,11 @@ function Home() {
         ]
     });
 
+
     // Separa os resultados para facilitar o uso abaixo
     const posts = results[0];
     const users = results[1];
+
 
     // Enquanto qualquer uma das requisições estiver carregando, mostra feedback
     if (posts.isLoading || users.isLoading) {

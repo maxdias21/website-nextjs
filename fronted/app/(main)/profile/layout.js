@@ -9,9 +9,9 @@ function ProfileLayout({children}) {
     return (
         <div className="content__container">
             <Header/>
-            <div className="containerFriends">
+            <main className="containerFriends">
                 {children}
-            </div>
+            </main>
         </div>
     );
 }

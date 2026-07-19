@@ -2,34 +2,32 @@ import styles from "./Post.module.css";
 
 import Image from "next/image";
 
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
-import Detail from "./Detail";
 import UserInfo from "@/components/ui/UserInfo";
 import PostActions from "@/components/ui/PostActions";
 
 import Link from "next/link";
 
+import {formattedData} from "@/utils/utils";
+
 
 function Post({post}) {
-    const [openPostModal, setOpenPostModal] = useState(false);
+    const [, setOpenPostModal] = useState(false);
 
-    useEffect(() => {
-        if (openPostModal) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "visible";
-        }
-    }, [openPostModal]);
+    const fullName = `${post?.user?.first_name} ${post?.user?.last_name}`.slice(0,50);
+    const profile_pic = post?.user?.profiles?.profile_pic
+
+    const data = formattedData(post?.creat_at);
 
     return (
         <div className={styles.postBody}>
-            <UserInfo/>
+            <UserInfo posted={data} urlImg={profile_pic} name={fullName} />
             <hr/>
             <div className={styles.postContent}>
-                <div onClick={() => setOpenPostModal(true)}>
+                <div >
                     <Link href={`/post/${post?.slug}/`}>
-                        {post?.image && <Image src={post.img} alt={"photo"} width={500}
+                        {post?.photo && <Image unoptimized src={post.photo} alt={"photo"} width={500}
                                               height={500}/>}
 
                         <div className={styles.paragraph}>
@@ -39,9 +37,6 @@ function Post({post}) {
                 </div>
                 <PostActions setOpenPostModal={setOpenPostModal}/>
             </div>
-            {openPostModal && (
-                <Detail setOpenPostModal={setOpenPostModal}/>
-            )}
         </div>
     );
 }

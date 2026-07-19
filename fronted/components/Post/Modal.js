@@ -7,11 +7,13 @@ import {faX, faImage} from "@fortawesome/free-solid-svg-icons";
 
 import {useRef, useState} from "react";
 import Image from "next/image";
-import {useMutation} from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 
 import {apiFetch} from "../../lib/api";
 
 function Modal({ref, setOpenModal}) {
+    const queryClient = useQueryClient();
+
     const imageRef = useRef(null);
     const textRef = useRef(null);
 
@@ -25,22 +27,35 @@ function Modal({ref, setOpenModal}) {
                 method: "POST",
                 body: formData,
             });
-            const result = await response.json();
 
-            if (!response.ok) throw new Error(JSON.stringify(result));
-            return result;
+
+            if (!response.ok) {
+                if (response.status === 500) {
+                    throw new Error("Erro interno no servidor, tente novamente.");
+                }
+
+                const result = await response.json();
+                throw new Error(JSON.stringify(result));
+            }
+
+            return response.json();
         },
 
-        onSuccess: () => {
+        onSuccess: async () => {
             setText("");
             setImageFile("");
             setImage("");
             if (textRef.current) textRef.current.innerText = "";
             if (imageRef.current) imageRef.current.value = "";
+
+            queryClient.invalidateQueries({
+                queryKey: ["userPosts"],
+            })
         }
     });
 
-    const disabled = ((text.trim()) && (!mutation.isPending)) && image ? styles.buttonActive : styles.buttonDisabled;
+
+    const disabled = mutation.isPending;
 
     function handleImageChange(e) {
         const file = e.target.files[0];
@@ -65,9 +80,7 @@ function Modal({ref, setOpenModal}) {
         const formData = new FormData();
         formData.append("content", text);
 
-        if (imageFile) {
-            formData.append("photo", imageFile);
-        }
+        formData.append("photo", imageFile);
 
         mutation.mutate(formData);
     }
@@ -85,11 +98,21 @@ function Modal({ref, setOpenModal}) {
                 <div>
                     {mutation.isError && (
                         <div>
-                            {Object.entries(JSON.parse(mutation.error.message)).map(([key, value]) => (
-                                <p className={styles.error} key={key}>{value[0]}</p>
-                            ))}
+                            {(() => {
+                                try {
+                                    const errors = JSON.parse(mutation.error.message);
+                                    return Object.entries(errors).map(([key, value]) => (
+                                        <p className={styles.error} key={key}>
+                                            {value[0]}
+                                        </p>
+                                    ));
+                                } catch {
+                                    return <p className={styles.error}>{mutation.error.message}</p>;
+                                }
+                            })()}
                         </div>
                     )}
+                    {mutation.isSuccess && <p className={styles.success}>Post criado com sucesso!</p>}
                 </div>
                 <hr/>
                 <div className={styles.modalBody}>
@@ -114,6 +137,7 @@ function Modal({ref, setOpenModal}) {
                             <label className={styles.customFile}>
                                 <FontAwesomeIcon icon={faImage}/>
                                 <input
+                                    disabled={disabled}
                                     ref={imageRef}
                                     type="file"
                                     accept="image/*"
@@ -130,7 +154,7 @@ function Modal({ref, setOpenModal}) {
                         </div>
                         <hr/>
                         <div className={styles.modalFooter}>
-                            <button type="submit" className={disabled}>
+                            <button disabled={disabled} className={styles.button} type="submit">
                                 {mutation.isPending ? "Publicando..." : "Publicar"}
                             </button>
                         </div>

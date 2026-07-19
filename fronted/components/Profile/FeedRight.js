@@ -2,18 +2,15 @@ import "./FeedGrid.css";
 
 import Container from "../Post/Container";
 import Posts from "../Post/Posts";
-import Post from "../Post/Post";
 
-function FeedRight() {
+function FeedRight({posts}) {
     return (
         <div className="feedRight">
-            <div className="content">
+            <div className="content__container">
                 <Container/>
             </div>
 
-            <Posts>
-                <Post/>
-            </Posts>
+            <Posts posts={posts}/>
         </div>
     );
 }

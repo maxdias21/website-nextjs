@@ -1,0 +1,33 @@
+.friend {
+    display: flex;
+    border: 1px solid #dfdfdf;
+    align-items: center;
+    border-radius: 5px;
+    gap: 15px;
+    padding: 10px;
+
+    img {
+        border-radius: 10px;
+    }
+}
+
+.friendsInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 0 1 100%;
+}
+
+.button {
+    background: #ededed;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: fit-content;
+    border: 1px solid #dfdfdf;
+    outline: none;
+
+    &:hover {
+        background: #dfdfdf;
+    }
+}

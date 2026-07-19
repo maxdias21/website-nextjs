@@ -6,20 +6,23 @@ import {faX} from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import UserInfo from "@/components/ui/UserInfo";
 import PostActions from "@/components/ui/PostActions";
+import {useRouter} from "next/navigation";
 
-function Detail({setOpenPostModal}) {
+function Detail({image, name, posted}) {
+    const router = useRouter();
+
     return (
         <section className={styles.container}>
             <div className={styles.content}>
                 <header>
-                    <FontAwesomeIcon onClick={() => setOpenPostModal(false)} className={styles.closeButton} icon={faX}/>
+                    <FontAwesomeIcon onClick={() => router.back()} className={styles.closeButton} icon={faX}/>
                 </header>
                 <div className={styles.containerPhoto}>
-                    <Image width={200} height={200} src={"https://picsum.photos/800/800"}
-                           alt="stories"/>
+                    {image && <Image width={200} height={200} src={image}
+                          unoptimized alt="stories"/> }
                 </div>
                 <div className={styles.containerComments}>
-                    <UserInfo showTimestamp={true}/>
+                    <UserInfo posted={posted} name={name} showTimestamp={true}/>
                     <PostActions/>
 
                     <div className={styles.commentsContent}>

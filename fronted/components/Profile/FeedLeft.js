@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import styles from "./FeedLeft.module.css";
 import "./FeedGrid.css";
 
@@ -9,59 +7,30 @@ import {faCakeCandles, faHouse, faLanguage, faLocationDot, faMars} from "@fortaw
 import SidebarList from "./SidebarList";
 import SidebarPreview from "./SidebarPreview";
 
-const FRIENDS_LIST = [
-    {
-        photo: "https://picsum.photos/200/300",
-        name: "Madasdasdasdasdsadsadsadsadsadasdsadasddsasadasdsadsadasdasdasdasdasdasdsadsax"
-    },
-    {photo: "https://picsum.photos/200/300", name: "Max"},
-    {photo: "https://picsum.photos/200/300", name: "Max"},
-    {photo: "https://picsum.photos/200/300", name: "Max"},
-    {photo: "https://picsum.photos/200/300", name: "Max"},
-    {photo: "https://picsum.photos/200/300", name: "Max"},
-    {photo: "https://picsum.photos/200/300", name: "Max"},
-    {photo: "https://picsum.photos/200/300", name: "Max"},
-
-];
-
-const PHOTOS_LIST = [
-    {photo: "https://picsum.photos/200/300"},
-    {photo: "https://picsum.photos/200/300",},
-    {photo: "https://picsum.photos/200/300",},
-    {photo: "https://picsum.photos/200/300",},
-    {photo: "https://picsum.photos/200/300",},
-    {photo: "https://picsum.photos/200/300",},
-    {photo: "https://picsum.photos/200/300",},
-    {photo: "https://picsum.photos/200/300",},
-    {photo: "https://picsum.photos/200/300",},
-    {photo: "https://picsum.photos/200/300",},
-    {photo: "https://picsum.photos/200/300",},
-];
+import Link from "next/link";
+import PersonDetails from "./PersonDetails";
 
 
-function FeedLeft() {
+function FeedLeft({profile, friends, photos}) {
+    const friendsList = {items: friends?.friends?.slice(0, 6), message: "Você não tem nenhum amigo", len: friends?.friends?.length};
+    const photosList = {items: photos, message:"Você não possui nenhuma foto" }
+
     return (
         <div className="feedLeft">
             <div className="content">
                 <h2>Detalhes pessoais</h2>
-                <p className={styles.detailItem}><FontAwesomeIcon className={styles.icon} icon={faHouse}/> Mora em São
-                    Paulo</p>
-                <p className={styles.detailItem}><FontAwesomeIcon className={styles.icon} icon={faLocationDot}/> De
-                    Brasília</p>
-                <p className={styles.detailItem}><FontAwesomeIcon className={styles.icon} icon={faCakeCandles}/> 14 de
-                    Abril de 1999</p>
-                <p className={styles.detailItem}><FontAwesomeIcon className={styles.icon} icon={faMars}/> Masculino</p>
-                <p className={styles.detailItem}><FontAwesomeIcon className={styles.icon} icon={faLanguage}/> Inglês e
-                    Português</p>
+                {profile && (<PersonDetails profile={profile}/>)}
+
             </div>
             <div className="content">
-                <SidebarList items={FRIENDS_LIST}>
-                    <SidebarPreview title="Amigos" linkText="Veja todos os amigos" spanText="100 amigos"/>
+                <SidebarList url={'/profile/'} items={friendsList.items} noItemsMessage={friendsList.message} >
+                    <SidebarPreview title="Amigos" linkText="Veja todos os amigos"
+                                    spanText={`${friendsList.len} amigos`}/>
                 </SidebarList>
             </div>
 
             <div className="content">
-                <SidebarList items={PHOTOS_LIST}>
+                <SidebarList url={'profile/photos/'} items={photosList.items} noItemsMessage={photosList.message}>
                     <SidebarPreview title="Fotos" linkText="Veja todos as fotos"/>
                 </SidebarList>
             </div>

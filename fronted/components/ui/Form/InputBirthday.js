@@ -27,14 +27,7 @@ const generateDays = (daysInMonth) => Array.from({length: daysInMonth}, (_, i) =
 const yearsOptions = Array.from({length: CURRENT_YEAR - MIN_YEAR + 1}, (_, i) => CURRENT_YEAR - i);
 
 
-
-function InputBirthday() {
-    const [date, setDate] = useState({
-        year: CURRENT_YEAR,
-        month: "Janeiro",
-        days: generateDays(31)
-    });
-
+function InputBirthday({date, setDate}) {
     function onDataChange({e, year = false}) {
         if (year) {
             const selectedYear = e.target.value;

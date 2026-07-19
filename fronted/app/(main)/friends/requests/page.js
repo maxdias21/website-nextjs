@@ -12,9 +12,9 @@ function RequestsPage() {
     return (
         <>
             <h1>Solicitações de Amizade</h1>
-            <div className={styles.content}>
+            <section className={styles.content}>
                 <Card />
-            </div>
+            </section>
 
         </>
     );

@@ -8,7 +8,7 @@ import StoriesContainer from "@/components/StoriesContainer";
 import Container from "@/components/Post/Container";
 
 function MainContainer({posts}) {
-    const isPosts = posts?.data.length > 0;
+    const isPosts = posts?.data?.posts?.length > 0;
     const isError = posts?.error;
 
     return (
@@ -20,7 +20,7 @@ function MainContainer({posts}) {
                     {isError && (
                         <h1>Erro ao encontrar posts</h1>
                     )}
-                    {isPosts && !isError && posts?.data?.map((post, index) => (
+                    {isPosts && !isError && posts?.data?.posts?.map((post, index) => (
                         <Post post={post} key={index}/>
                     ))}
                     {!posts.data.length > 0 && <h2 className={styles.noMorePosts}>Não há mais posts para mostrar</h2>}

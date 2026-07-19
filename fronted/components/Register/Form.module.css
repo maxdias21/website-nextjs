@@ -5,6 +5,24 @@
     align-items: stretch;
     width: 100%;
 }
+
+.isPending {
+    pointer-events: none;
+}
+
+.success {
+    color: green;
+    font-size: 1.2rem;
+}
+
+.error {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: red;
+    font-size: 1.1rem;
+}
+
 .nameGroup {
     display: flex;
     gap: 10px;

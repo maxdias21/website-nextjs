@@ -1,89 +1,104 @@
 "use client";
 
-import "./page.css";
+import styles from "./page.module.css";
+
 import {useState} from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRepeat } from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faRepeat} from "@fortawesome/free-solid-svg-icons";
+
+import usePatchProfile from "../../../../hooks/usePatchProfile";
+import usePatchUser from "../../../../hooks/usePatchUser";
+import PatchFieldsProfile from "../../../../components/Profile/PatchFieldsProfile";
+import PatchFieldsUser from "../../../../components/Profile/PatchFieldsUser";
 
 function AboutPage() {
-    const [isErrors] = useState([]);
     const [changeForm, setChangeForm] = useState(true);
+    const [blankForm, setBlankForm] = useState(false);
 
     const CustomTag = "h3";
-    const titleEditDetails = changeForm ?  <CustomTag>Editar detalhes</CustomTag> : <CustomTag>Editar informações pessoais</CustomTag>
+    const titleEditDetails = changeForm ? <CustomTag>Editar detalhes</CustomTag> :
+        <CustomTag>Editar informações pessoais</CustomTag>;
 
-    async function cityExist(city) {
-        const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${city}&format=json`);
-        const data = await response.json();
+    const mutationProfile = usePatchProfile();
+    const mutationUser = usePatchUser();
 
-        return data.length > 0;
+    const isLoading = mutationUser.isPending || mutationProfile.isPending;
 
-    }
+    const profileError = mutationProfile?.error && Object.entries(mutationProfile?.error || {}).map(([key, value]) => (
+        <p className={styles.error} key={key}>
+            {value}
+        </p>
+    ));
+    const profileSuccess = mutationProfile.isSuccess && (
+        <p className={styles.success}>Alterações realizadas com sucesso</p>
+    )
 
-    async function handleSubmit(e) {
+    const userError = mutationUser?.error && Object.entries(mutationUser?.error || {}).map(([key, value]) => (
+        <p className={styles.error} key={key}>
+            {value}
+        </p>
+    ));
+    const userSuccess = mutationUser.isSuccess && (
+        <p className={styles.success}>Alterações realizadas com sucesso</p>
+    )
+    const userErrorBlankForm = blankForm && (
+        <p className={styles.warning}>Você não fez nenhuma alteração na sua conta</p>
+    )
+
+
+    function handleSubmit(e) {
         e.preventDefault();
+        const data = Object.fromEntries(
+            new FormData(e.target).entries()
+        );
 
-        /*
-        const formData = new FormData(e.target);
-        const currentyCity = await cityExist(formData.get("currentyCity"));
-        const homeTown = await cityExist(formData.get("homeTown"));
+        let filteredData = {};
+        filteredData = Object.fromEntries(Object.entries(data).filter(([key, value]) => value.trim() !== ""));
 
-        if(currentyCity.length !== 0) {
-            setIsErrors((prevState) => [...prevState, "Digite uma cidade atual inválida"]);
+        if (Object.keys(filteredData).length <= 0) {
+            setBlankForm(true);
+            return;
         }
 
-        if(homeTown.length !== 0) {
-            setIsErrors((prevState) => [...prevState, "Digite uma cidade atual inválida"]);
-        }*/
+        if (changeForm) {
+            mutationProfile.mutate(filteredData);
+        } else {
+            mutationUser.mutate(filteredData);
+        }
+        setBlankForm(false);
     }
+
 
     return (
         <div className="content">
-            <div className="detailsHeader">
+            <div className={styles.detailsHeader}>
                 {titleEditDetails}
-                <FontAwesomeIcon onClick={() => setChangeForm(!changeForm)} icon={faRepeat} />
+                <FontAwesomeIcon onClick={() => {
+                    setChangeForm(!changeForm);
+                    mutationUser.reset();
+                    mutationProfile.reset();
+                    setBlankForm(false);
+                }} icon={faRepeat}/>
             </div>
-            <p className="p">Clique no ícone 🔁 acima para atualizar suas informações {changeForm ?  "pessoais" : "complementares"}</p>
 
-            {changeForm && (
-                    <form onSubmit={handleSubmit}>
-                        <input name="currentyCity" onClick={() => cityExist("santos")}
-                               placeholder="Você mora atualmente em?"/>
-                        <input name="homeTown" placeholder="Você é de qual cidade?"/>
-                        <select>
-                            <option>Masculino</option>
-                            <option>Feminino</option>
-                            <option>Outro</option>
-                        </select>
-                        {isErrors.length > 0 && (
-                            isErrors.map((error, index) => (
-                                <div key={index}>
-                                    <p>{error}</p>
-                                </div>
-                            ))
-                        )}
-                        <button type="subtmit">Enviar</button>
-                    </form>
-            )}
 
-            {!changeForm && (
-                    <form>
-                        <input name="first_name" placeholder="Nome"/>
-                        <input name="last_name" placeholder="Sobrenome"/>
+            <p className={styles.p}>Clique no ícone 🔁 acima para atualizar suas
+                informações {changeForm ? "pessoais" : "complementares"}</p>
 
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="Senha"
-                        />
 
-                        <button type="submit">
-                            Enviar
-                        </button>
-                    </form>
-            )}
+            <form className={`${styles.form} ${isLoading ? styles.disabled : ""}`} onSubmit={handleSubmit}>
+                {changeForm && (
+                    <PatchFieldsProfile isSuccess={profileSuccess} isError={profileError} isLoading={isLoading}/>
+                )}
 
+                {!changeForm && (
+                    <PatchFieldsUser blankForm={userErrorBlankForm} isSuccess={userSuccess} isError={userError} isLoading={isLoading}/>
+                )}
+
+                <button className={styles.buttonSubmit} disabled={isLoading}
+                        type="submit">{isLoading ? "Enviando dados..." : "Enviar"}</button>
+            </form>
         </div>
     );
 }

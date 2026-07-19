@@ -1,5 +1,5 @@
 /* ---- Base ---- */
-.container {
+.layout {
     display: grid;
     grid-template-areas:
        "sidebar" "content";

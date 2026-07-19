@@ -12,9 +12,9 @@ function SuggestionsPage() {
     return (
         <>
             <h1>Sugestões de Amizade</h1>
-            <div className={styles.content}>
+            <section className={styles.content}>
                 <Card />
-            </div>
+            </section>
 
         </>
     );

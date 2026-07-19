@@ -1,0 +1,75 @@
+.container {
+    background: rgba(234, 234, 234, 0.48);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.content {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    margin-top: 50px;
+    border-radius: 10px;
+    width: 90%;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.isDisabled {
+    pointer-events: none;
+}
+
+
+.button {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+
+.errorMessage {
+    color: red;
+    font-size: 0.9rem;
+}
+
+.cancel {
+    background-color: #7a7979;
+
+    &:hover {
+        background-color: #636161;
+    }
+}
+
+.success {
+    background-color: #5b5bff;
+
+    &:hover {
+       background-color: #3636ff;
+    }
+}
+
+@media (min-width: 992px) {
+    .content {
+        width: 50%;
+    }
+
+}

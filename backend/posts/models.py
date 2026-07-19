@@ -26,3 +26,7 @@ class Posts(models.Model):
     def __str__(self):
         return self.user.username
 
+    class Meta:
+        verbose_name_plural = 'Posts'
+        verbose_name = 'Post'
+

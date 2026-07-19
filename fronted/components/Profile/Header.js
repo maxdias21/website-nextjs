@@ -1,10 +1,21 @@
+"use client";
+
 import styles from "./Header.module.css";
 import "../../app/(main)/profile/page.css";
 
 import Image from "next/image";
 import Link from "next/link";
+import useGetMyProfile from "../../hooks/useGetMyProfile";
+import useGetFriends from "../../hooks/useGetFriends";
 
 function Header() {
+    const {data: dataPerson, isLoading: isLoadingPerson} = useGetMyProfile();
+    const {data: dataFriends, isLoading: isLoadingFriends} = useGetFriends();
+
+    if(isLoadingPerson && isLoadingFriends) return null;
+
+    const numberFriends = dataFriends?.friends?.length;
+
     return (
         <header className={styles.header}>
             <div className={styles.inner}>
@@ -21,8 +32,8 @@ function Header() {
                                height={150}/>
                     </div>
                     <div className={styles.profileName}>
-                        <h1>Max Dias Vieira Peixotaaaaao</h1>
-                        <p>198 amigos</p>
+                        <h1>{dataPerson?.user?.first_name} {dataPerson?.user?.last_name}</h1>
+                        {numberFriends > 0 && <p>{numberFriends} amigos</p>}
                     </div>
                 </div>
                 <hr/>

@@ -1,60 +1,80 @@
 "use client";
 
+import styles from "./page.module.css";
+
 import Image from "next/image";
-
-import "./page.css";
-
-import React, {useState} from "react";
 import Link from "next/link";
 
-const FRIENDS_LIST = [
-    {photo: "https://picsum.photos/200/300", name: "Max"},
-    {photo: "https://picsum.photos/200/300", name: "João"},
-    {photo: "https://picsum.photos/200/300", name: "Maria"},
-    {photo: "https://picsum.photos/200/300", name: "Pedro"},
-    {photo: "https://picsum.photos/200/300", name: "Lucas"},
-    {photo: "https://picsum.photos/200/300", name: "Ana"},
-    {photo: "https://picsum.photos/200/300", name: "Carlos"},
-    {photo: "https://picsum.photos/200/300", name: "Fernanda"},
-    {photo: "https://picsum.photos/200/300", name: "Julia"},
-    {photo: "https://picsum.photos/200/300", name: "Rafael"},
-    {photo: "https://picsum.photos/200/300", name: "Gabriel"},
-    {photo: "https://picsum.photos/200/300", name: "Matheus"},
-    {photo: "https://picsum.photos/200/300", name: "Larissa"},
-    {photo: "https://picsum.photos/200/300", name: "Bruno"},
-    {photo: "https://picsum.photos/200/300", name: "Camila"},
-    {photo: "https://picsum.photos/200/300", name: "Ricardo"},
-    {photo: "https://picsum.photos/200/300", name: "Patricia"},
-    {photo: "https://picsum.photos/200/300", name: "Vinicius"},
-    {photo: "https://picsum.photos/200/300", name: "Amanda"},
-    {photo: "https://picsum.photos/200/300", name: "Thiago"},
-    {photo: "https://picsum.photos/200/300", name: "Eduardo"},
-    {photo: "https://picsum.photos/200/300", name: "Beatriz"},
-    {photo: "https://picsum.photos/200/300", name: "Gustavo"},
-    {photo: "https://picsum.photos/200/300", name: "Isabela"},
-    {photo: "https://picsum.photos/200/300", name: "Leonardo"},
-    {photo: "https://picsum.photos/200/300", name: "Felipe"},
-    {photo: "https://picsum.photos/200/300", name: "Natália"},
-    {photo: "https://picsum.photos/200/300", name: "Daniel"},
-    {photo: "https://picsum.photos/200/300", name: "Sofia"},
-    {photo: "https://picsum.photos/200/300", name: "Henrique"},
-];
+import React, {useState} from "react";
+
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTrash} from "@fortawesome/free-solid-svg-icons";
+
+
+import useGetPhotos from "../../../../hooks/useGetPhotos";
+import ModalConfirm from "../../../../components/ModalConfirm";
+
+import usePostDeletePhotos from "../../../../hooks/usePostDeletePhotos";
+import {useQueryClient} from "@tanstack/react-query";
 
 
 function PhotosPage() {
-    const [photos] = useState(FRIENDS_LIST);
+    const queryClient = useQueryClient();
+
+    const {data, isLoading} = useGetPhotos();
+    const [modal, setModal] = useState(null);
+    const [photoId, setPhotoId] = useState(null);
+    console.log(data);
+
+
+    const mutation = usePostDeletePhotos({
+        onSuccess: (_, id) => {
+            queryClient.setQueryData(["LeftPersonPhotos"], old =>
+                old.filter(photo => photo.id !== id));
+            setModal(false);
+        },
+    });
+
+    if (isLoading) return null;
+
 
     return (
         <div className="content">
-            <div className="grid">
-                {photos.map((photo, index) => (
-                    <Link key={index} href="/profile/photos/1" scroll={false}>
-                        <Image src={photo.photo} width={200} height={200} alt={"photos"}/>
-                    </Link>
-                ))}
-            </div>
+            {data?.length > 0 ?
+                <div className={styles.grid}>
+                    {data?.map((photo) => (
+                        <div key={photo.id} className={styles.imageContent}>
+                            <Link href={`/profile/photos/${photo.id}`}
+                                  scroll={false}>
+                                <Image unoptimized src={photo.photo} width={200} height={200} alt={"photos"}/>
+                            </Link>
+                            <div onClick={() => {
+                                setModal(!modal);
+                                setPhotoId(photo?.id);
+                            }} className={styles.trashIcon}>
+                                <FontAwesomeIcon className={styles.svg} icon={faTrash}/>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                : <h3>Você não possui nenhuma foto, que tal postar uma?</h3>}
+
+            {modal && (
+                <ModalConfirm
+                    error={mutation.isError}
+                    title="Remover foto?"
+                    isLoading={mutation.isPending}
+                    errorMessage={"Erro ao deletar foto"}
+                    isLoadingMessage={"Deletando foto..."}
+                    text="Você gostaria de apagar essa foto permanentemente?"
+                    setModal={setModal} action={() => {
+                    mutation.mutate(photoId);
+                }}/>
+            )}
         </div>
     );
+
 }
+
 
 export default PhotosPage;
