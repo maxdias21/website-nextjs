@@ -5,7 +5,6 @@ from django.db import models
 
 
 # Create your models here.
-
 class Profiles(models.Model):
     # Gênero
     MALE = "M"
@@ -63,9 +62,6 @@ class Profiles(models.Model):
     visibility = models.CharField(choices=VISIBILITY_CHOICES, default=PUBLIC, max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name}'
 
     class Meta:
         verbose_name_plural = 'Profiles'

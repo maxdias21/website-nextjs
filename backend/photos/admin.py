@@ -9,8 +9,9 @@ class PhotosAdmin(admin.ModelAdmin):
     search_fields = ('user__username', 'user__first_name', 'user__last_name')
     ordering = ('user__username',)
     list_per_page = 100
+    list_display_links = ('id','user',)
 
     def get_short_name(self, obj):
-        return f'{obj.photo.url[0:50]}'
+        return f'{obj.photo.url[0:50]}...'
 
 admin.site.register(Photos, PhotosAdmin)

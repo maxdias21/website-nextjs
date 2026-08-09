@@ -43,6 +43,8 @@ urlpatterns = [
     path('api/', include('profiles.urls')),
     path('api/', include('friends.urls')),
     path('api/', include('photos.urls')),
+    path('api/', include('likes.urls')),
+    path('api/', include('chats.urls')),
     path("__debug__/", include(debug_toolbar.urls)),
 ]
 

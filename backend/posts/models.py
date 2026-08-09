@@ -1,6 +1,7 @@
 import time
 
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.utils.text import slugify
 
@@ -8,6 +9,8 @@ from django.utils.text import slugify
 # Create your models here.
 
 class Posts(models.Model):
+    likes = GenericRelation('likes.Likes')
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     content = models.TextField()
     creat_at = models.DateTimeField(auto_now_add=True)

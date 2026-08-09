@@ -88,7 +88,7 @@ class ProfileApiView(ModelViewSet):
     def me(self, request):
         profile = get_object_or_404(Profiles, user=request.user.id)
         if request.method == "GET":
-            serializer = ProfilesSerializer(profile)
+            serializer = ProfilesSerializer(profile, context={"request": request} )
 
             return Response(serializer.data)
 

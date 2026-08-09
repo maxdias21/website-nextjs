@@ -18,11 +18,15 @@ class FriendsRequest(models.Model):
     status = models.CharField(choices=STATUS_CHOICES, default="pending", max_length=10)
     created_at = models.DateTimeField(auto_now_add=True)
 
+
     def clean(self):
         if self.from_user == self.to_user:
             raise ValidationError("You cannot add friends to yourself.")
 
     class Meta:
+        verbose_name_plural = "Friends Requests"
+        verbose_name = "Friend Request"
+
         constraints = [
             models.UniqueConstraint(
                 fields=["from_user", "to_user"],

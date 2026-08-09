@@ -1,6 +1,8 @@
+from django.contrib.contenttypes.models import ContentType
 from rest_framework import serializers
 
 from friends.serializers.user_serializer import UserSerializer
+from likes.models import Likes
 from ..models import Posts
 
 
@@ -14,9 +16,15 @@ class PostsSerializer(serializers.ModelSerializer):
     content = serializers.CharField(allow_blank=True)
     photo = serializers.ImageField(required=False)
 
+    likes_count = serializers.IntegerField(read_only=True)
+    dislikes_count = serializers.IntegerField(read_only=True)
+    is_liked = serializers.BooleanField(read_only=True)
+    is_disliked = serializers.BooleanField(read_only=True)
+
     class Meta:
         model = Posts
         exclude = ('is_published', )
+
 
     def validate(self, attrs):
         import os

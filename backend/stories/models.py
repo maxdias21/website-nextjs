@@ -7,7 +7,7 @@ from django.db import models
 
 # Create your models here.
 
-class Story(models.Model):
+class Stories(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="stories/")
     created_at = models.DateTimeField(auto_now_add=True, )

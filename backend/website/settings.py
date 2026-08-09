@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from datetime import timedelta
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Build paths inside the project likes this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -26,7 +26,7 @@ DEBUG = True
 
 # CORS
 # Segurança de domínios
-ALLOWED_HOSTS = ['localhost','127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Configuração de CORS
 CORS_ALLOW_CREDENTIALS = True
@@ -53,6 +53,9 @@ CSRF_COOKIE_SECURE = False
 # Application definition
 
 INSTALLED_APPS = [
+    # Custom Admin
+    'jazzmin',
+
     # Django Simple JWT
     'rest_framework_simplejwt',
 
@@ -75,24 +78,21 @@ INSTALLED_APPS = [
     'stories',
     'friends',
     'photos',
+    'likes',
+    'chats',
 ]
 
 MIDDLEWARE = [
-    # Django toolbar (desenvolvimento)
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-
-    # Cors
     "corsheaders.middleware.CorsMiddleware",
-
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',   # ← antes
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',   # ← depois
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 ROOT_URLCONF = 'website.urls'
 
 TEMPLATES = [
@@ -169,6 +169,6 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10000),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=99999),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=10000),
 }
