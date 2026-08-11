@@ -45,6 +45,7 @@ urlpatterns = [
     path('api/', include('photos.urls')),
     path('api/', include('likes.urls')),
     path('api/', include('chats.urls')),
+    path('api/', include('stories.urls')),
     path("__debug__/", include(debug_toolbar.urls)),
 ]
 
