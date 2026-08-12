@@ -7,14 +7,12 @@ import styles from "./ModalImage.module.css";
 import {useState} from "react";
 
 
-function ModalImage({ref, setOpenModal}) {
-    const images = [
-        "https://picsum.photos/1000/1000?random=11",
-        "https://picsum.photos/200/300?random=12",
-        "https://picsum.photos/200/300?random=13",
-        "https://picsum.photos/200/300?random=14",
-        "https://picsum.photos/200/300?random=15",
-    ];
+function ModalImage({ref, setOpenModal, images, fullName}) {
+    console.log(images)
+    console.log('--------')
+
+    if(!images) return;
+
     const [imagesCarousel, setImagesCarousel] = useState({
         setLeft: false,
         setRight: true,
@@ -58,10 +56,10 @@ function ModalImage({ref, setOpenModal}) {
                 <div className={styles.modal__header}>
                     <div className={styles.modal__title}>
                         <div>
-                            <Image width={200} height={200} src={"https://picsum.photos/399/300"}
+                            <Image unoptimized width={200} height={200} src={"https://picsum.photos/399/300"}
                                    alt="stories"/>
                         </div>
-                        <div>Max Dddasdsadasda</div>
+                        <div>{fullName}</div>
                     </div>
                     <FontAwesomeIcon className={styles["modal__button--close"]}
                                      onClick={() => setOpenModal(false)}
@@ -75,7 +73,7 @@ function ModalImage({ref, setOpenModal}) {
                             {imagesCarousel.setLeft && (
                                 <FontAwesomeIcon  onClick={() => handleImageChance({left: true})} className={styles.modalBtnLeft} icon={faChevronLeft}/>
                             )}
-                            <Image width={200} height={200} src={imagesCarousel.image}
+                            <Image unoptimized width={200} height={200} src={imagesCarousel.image}
                                    alt="stories"/>
                             {imagesCarousel.setRight && (
                                 <FontAwesomeIcon styles={{fontSize: '22.9rem;'}} onClick={() => handleImageChance({right: true})}
@@ -83,7 +81,7 @@ function ModalImage({ref, setOpenModal}) {
 
                             )}
                         </>
-                    ) : <Image width={200} height={200} src={images[0]}
+                    ) : <Image unoptimized width={200} height={200} src={images[0]}
                                alt="stories"/>}
 
                 </div>

@@ -26,6 +26,8 @@ class StoriesViewSet(ModelViewSet):
                 default=F("from_user"))).
                    values_list('friend_id', flat=True))
 
+
+
         stories = Stories.objects.filter(Q(author_id__in=friends) | Q(author=user)).order_by('-created_at')
         return stories
 
